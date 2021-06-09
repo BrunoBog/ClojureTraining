@@ -21,9 +21,13 @@
 
 (defn novo-button
   "Nudes button"
-  [text]
+  ([text]
   {:type "BottomButton"
    :text text})
+  ([text action]
+   {:type "BottomButton"
+    :text text
+    :action action}))
 
 (defn nova-action
   "represent a action from button"

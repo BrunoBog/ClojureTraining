@@ -10,20 +10,20 @@
   "select pages for a specific country"
   [country-code]
   (case country-code
-    "br" brpages/listar-paginas))
+    "br" {:status 200 :body (json/write-str (brpages/listar-paginas))}))
 
-(defn list-pages 
+(defn list-pages
   "list pages from param"
   [request]
   (let  [query-param (get-in request [:query-params :country])]
+    (pprint query-param)
     (if (boolean  query-param)
       (list-page-by-country query-param)
       {:status 400 :message "miss country parameter"})))
 
 (defn register
   "Register a new client ( or deny)"
-  [request]
-  )
+  [request])
 
 (def routes (route/expand-routes #{["/listpages" :get list-pages :route-name :listar-paginas]
                                    ["/register" :post register :route-name :criar-tarefa]}))
@@ -39,3 +39,12 @@
 
 (defn stop-server [] (http/stop @server))
 (defn restart-server [] (stop-server) (start-server))
+
+;testes do server
+(start-server)
+(restart-server)
+(defn test-request [verb url]
+  (test/response-for (::http/service-fn @server) verb url))
+
+(println (test-request :get "/listpages?country=br"))
+
