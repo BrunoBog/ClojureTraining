@@ -3,7 +3,6 @@
             [clojure.data.json :as json])
   (:use clojure.pprint))
 
-
 (defn montar-main-br
   "devolve a pagina inicial em Pt-br"
   []
@@ -52,7 +51,7 @@
                                          "mail"))
 
         bottom (conj clojure.lang.PersistentQueue/EMPTY
-                     (model/novo-button "Continuar"))]
+                     (model/novo-button "Continuar" (model/nova-action "post" "/register")))]
     (model/nova-pagina children bottom)))
 
 (defn listar-paginas
@@ -68,5 +67,4 @@
   [])
 
 (defn registration-fail
-  "define a registration with deny"
-  [])
+  "define a registration with deny"  [])
